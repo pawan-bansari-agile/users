@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package app;
+
+message Empty {}
+
+// The User message structure that matches the Mongoose User schema.
+message User {
+  string id = 1; // The MongoDB ObjectId, represented as a string
+  string userName = 2;
+  string email = 3;
+  string password = 4;
+}
+
+// Request message for creating a user
+message CreateUserRequest {
+  string userName = 1;
+  string email = 2;
+  string password = 3;
+}
+
+// Response message for a single user operation
+message UserResponse {
+  User user = 1;
+}
+
+// Request message for retrieving a user by ID
+message GetUserRequest {
+  string id = 1;
+}
+
+// Response message for retrieving multiple users
+message GetUsersResponse {
+  repeated User users = 1;
+}
+
+// Request message for updating a user
+message UpdateUserRequest {
+  string id = 1;
+  string userName = 2;
+  string email = 3;
+  string password = 4;
+}
+
+// Request message for deleting a user by ID
+message DeleteUserRequest {
+  string id = 1;
+}
+
+// Empty response message
+message DeleteUserResponse {
+  bool success = 1;
+}
+
+// The User service definition.
+service UserController {
+  rpc CreateUser(CreateUserRequest) returns (UserResponse);
+  rpc GetUser(GetUserRequest) returns (UserResponse);
+  rpc GetUsers(Empty) returns (GetUsersResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UserResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+}
